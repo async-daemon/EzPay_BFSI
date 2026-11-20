@@ -1,0 +1,52 @@
+<div class="panel">
+  <h2>Transaction history</h2>
+
+  <div class="formRow" style="margin-bottom: 18px;">
+    <div class="formGroup" style="margin-bottom: 0;">
+      <label for="typeFilter">Type</label>
+      <select id="typeFilter" name="typeFilter" [(ngModel)]="typeFilter" (ngModelChange)="reload()">
+        <option value="">All</option>
+        <option value="UPI">UPI</option>
+        <option value="BANK_TRANSFER">Bank Transfer</option>
+      </select>
+    </div>
+    <div class="formGroup" style="margin-bottom: 0;">
+      <label for="statusFilter">Status</label>
+      <select id="statusFilter" name="statusFilter" [(ngModel)]="statusFilter" (ngModelChange)="reload()">
+        <option value="">All</option>
+        <option value="COMPLETED">Completed</option>
+        <option value="REQUIRES_VERIFICATION">Requires verification</option>
+        <option value="BLOCKED">Blocked</option>
+      </select>
+    </div>
+  </div>
+
+  @if (transactions().length === 0) {
+    <div class="emptyState">
+      <p>No transactions match these filters.</p>
+    </div>
+  } @else {
+    <table class="dataTable">
+      <thead>
+        <tr>
+          <th>Counterparty</th>
+          <th>Type</th>
+          <th>Amount</th>
+          <th>Date</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (txn of transactions(); track txn.transactionId) {
+          <tr>
+            <td>{{ txn.counterparty }}<br /><small style="color: var(--text-muted);">{{ txn.note }}</small></td>
+            <td>{{ txn.type }}</td>
+            <td>₹{{ txn.amount | number: '1.2-2' }}</td>
+            <td>{{ txn.date | date: 'medium' }}</td>
+            <td><span class="pill" [class]="txn.status.toLowerCase()">{{ txn.status }}</span></td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+</div>

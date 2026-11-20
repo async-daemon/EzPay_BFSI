@@ -1,0 +1,58 @@
+@if (profile(); as p) {
+  <div class="panel" style="display: flex; align-items: center; gap: 18px; background: linear-gradient(135deg, var(--brand-purple), var(--brand-purple-dark)); color: #fff;">
+    <div style="width: 56px; height: 56px; border-radius: 50%; background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 800;">
+      {{ p.username.charAt(0).toUpperCase() }}
+    </div>
+    <div>
+      <div style="font-size: 18px; font-weight: 700;">{{ p.username }}</div>
+      <div style="opacity: 0.85; font-size: 13px;">Member since {{ p.registrationDate | date: 'mediumDate' }}</div>
+    </div>
+  </div>
+
+  <div class="panel" style="max-width: 460px;">
+    <h2>Profile details</h2>
+    <form (ngSubmit)="saveProfile()" #form="ngForm">
+      <div class="formGroup">
+        <label for="username">Full name</label>
+        <input id="username" name="username" type="text" [(ngModel)]="username" required minlength="2" />
+      </div>
+      <div class="formGroup">
+        <label>Email</label>
+        <input type="text" [value]="p.email" disabled />
+      </div>
+      <div class="formGroup">
+        <label>Mobile number</label>
+        <input type="text" [value]="p.mobileNumber" disabled />
+      </div>
+      <div class="formGroup">
+        <label for="upiId">UPI ID</label>
+        <input id="upiId" name="upiId" type="text" [(ngModel)]="upiId" placeholder="yourname@bank" />
+      </div>
+      <button type="submit" class="primaryBtn" [disabled]="saving() || form.invalid">
+        @if (saving()) { <span class="spinner"></span> }
+        Save changes
+      </button>
+    </form>
+  </div>
+}
+
+<div class="panel">
+  <h2>Linked bank accounts</h2>
+  @if (bankAccounts().length === 0) {
+    <div class="emptyState">
+      <p>No bank accounts yet. Add one from the Payments tab.</p>
+    </div>
+  } @else {
+    @for (acc of bankAccounts(); track acc.accountId) {
+      <div class="listItem">
+        <div>
+          <div class="title">{{ acc.accountHolderName }}</div>
+          <div class="meta">{{ acc.maskedAccountNumber }} · {{ acc.ifscCode }}</div>
+        </div>
+        @if (acc.isVerified) {
+          <span class="pill completed">Verified</span>
+        }
+      </div>
+    }
+  }
+</div>

@@ -1,0 +1,48 @@
+<div class="panel" style="max-width: 460px;">
+  <h2>New reminder</h2>
+  <form (ngSubmit)="create()" #form="ngForm">
+    <div class="formGroup">
+      <label for="title">Title</label>
+      <input id="title" name="title" type="text" [(ngModel)]="title" required minlength="2" maxlength="255" />
+    </div>
+    <div class="formRow">
+      <div class="formGroup">
+        <label for="amount">Amount (₹)</label>
+        <input id="amount" name="amount" type="number" min="0.01" step="0.01" [(ngModel)]="amount" required />
+      </div>
+      <div class="formGroup">
+        <label for="dueDate">Due date</label>
+        <input id="dueDate" name="dueDate" type="date" [(ngModel)]="dueDate" required />
+      </div>
+    </div>
+    <button type="submit" class="primaryBtn" [disabled]="createLoading() || form.invalid">
+      @if (createLoading()) { <span class="spinner"></span> }
+      Create reminder
+    </button>
+  </form>
+</div>
+
+<div class="panel">
+  <h2>Your reminders</h2>
+  @if (reminders().length === 0) {
+    <div class="emptyState">
+      <p>No reminders yet.</p>
+    </div>
+  } @else {
+    @for (reminder of reminders(); track reminder.reminderId) {
+      <div class="listItem">
+        <div>
+          <div class="title">{{ reminder.title }}</div>
+          <div class="meta">₹{{ reminder.amount }} · due {{ reminder.dueDate | date: 'mediumDate' }}</div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <span class="pill" [class]="reminder.status.toLowerCase()">{{ reminder.status }}</span>
+          @if (reminder.status !== 'PAID') {
+            <button type="button" class="ghostBtn" (click)="sendNow(reminder.reminderId)">Send now</button>
+            <button type="button" class="ghostBtn" (click)="markPaid(reminder.reminderId)">Mark paid</button>
+          }
+        </div>
+      </div>
+    }
+  }
+</div>

@@ -1,0 +1,45 @@
+<h1 style="margin-bottom: 4px;">Welcome back, {{ auth.username() }}</h1>
+<p style="color: var(--text-muted); margin-bottom: 24px;">Here's what's happening with your money today.</p>
+
+<div class="statGrid">
+  <div class="statCard" (click)="navigate.emit('transactions')">
+    <div class="label">Total transactions</div>
+    <div class="value">{{ transactions().length }}</div>
+  </div>
+  <div class="statCard" (click)="navigate.emit('reminders')">
+    <div class="label">Pending reminders</div>
+    <div class="value">{{ pendingReminders }}</div>
+  </div>
+  <div class="statCard" (click)="navigate.emit('notifications')">
+    <div class="label">Unread notifications</div>
+    <div class="value">{{ unreadNotifications }}</div>
+  </div>
+  <div class="statCard" (click)="navigate.emit('payments')">
+    <div class="label">Make a payment</div>
+    <div class="value">
+      <svg class="icon" style="width: 28px; height: 28px; color: var(--brand-purple);" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+  </div>
+</div>
+
+<div class="panel">
+  <h2>Recent transactions</h2>
+  @if (recentTransactions.length === 0) {
+    <div class="emptyState">
+      <p>No transactions yet. Make your first payment to see it here.</p>
+    </div>
+  } @else {
+    @for (txn of recentTransactions; track txn.transactionId) {
+      <div class="listItem">
+        <div>
+          <div class="title">{{ txn.counterparty }}</div>
+          <div class="meta">{{ txn.type }} · {{ txn.date | date: 'medium' }}</div>
+        </div>
+        <div style="text-align: right;">
+          <div class="title">₹{{ txn.amount | number: '1.2-2' }}</div>
+          <span class="pill" [class]="txn.status.toLowerCase()">{{ txn.status }}</span>
+        </div>
+      </div>
+    }
+  }
+</div>

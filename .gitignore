@@ -1,17 +1,43 @@
-# Python
+# ===== python-fastapi-version/ (legacy Python/FastAPI build) =====
 __pycache__/
-*.pyc
-.venv/
-venv/
+*.py[cod]
+python-fastapi-version/**/.venv/
+python-fastapi-version/**/venv/
 *.egg-info/
 .pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.cover
+htmlcov/
+python-fastapi-version/backend/*.db
+python-fastapi-version/backend/*.db-journal
+python-fastapi-version/backend/*.db-shm
+python-fastapi-version/backend/*.db-wal
+python-fastapi-version/backend/.env
 
-# Backend runtime artifacts
-backend/*.db
-backend/.env
+# ===== backend-java/ (Java 17 / Spring MVC / Hibernate) =====
+backend-java/target/
+*.class
+*.jar
+!.mvn/wrapper/maven-wrapper.jar
+backend-java/*.mv.db
+backend-java/*.trace.db
+backend-java/ezpaydb*
 
-# Editors / OS
+# ===== frontend-angular/ (Angular) =====
+frontend-angular/node_modules/
+frontend-angular/dist/
+frontend-angular/.angular/
+frontend-angular/*.log
+
+# ===== Shared =====
+.env
+*.log
 .vscode/
 .idea/
+*.swp
 .DS_Store
 Thumbs.db
+desktop.ini
+node_modules/
+dist/

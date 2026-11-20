@@ -1,0 +1,9 @@
+<router-outlet />
+
+<div class="toastStack" aria-live="polite">
+  @for (toast of toasts.toasts(); track toast.id) {
+    <div class="toast" [class]="toast.kind" (click)="toasts.dismiss(toast.id)">
+      {{ toast.message }}
+    </div>
+  }
+</div>

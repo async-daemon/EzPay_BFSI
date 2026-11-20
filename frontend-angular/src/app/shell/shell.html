@@ -1,0 +1,47 @@
+<div class="appShell">
+  <header class="topBar">
+    <div class="brand">
+      <svg viewBox="0 0 24 24" class="icon"><path d="M3 10h18M7 15h2m4 0h4M5 6h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      EzPay
+    </div>
+
+    <nav class="navLinks" [class.open]="mobileNavOpen()">
+      @for (item of navItems; track item.id) {
+        <button type="button" [class.active]="section() === item.id" (click)="goTo(item.id)">
+          {{ item.label }}
+        </button>
+      }
+    </nav>
+
+    <div class="topBarRight">
+      <span class="userChip">{{ auth.username() }}</span>
+      <button type="button" class="ghostBtn" (click)="logout()">Log out</button>
+      <button type="button" class="navToggle" (click)="mobileNavOpen.set(!mobileNavOpen())" aria-label="Toggle menu">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main class="appMain">
+    @switch (section()) {
+      @case ('dashboard') {
+        <app-dashboard (navigate)="goTo($event)" />
+      }
+      @case ('payments') {
+        <app-payments />
+      }
+      @case ('transactions') {
+        <app-transactions />
+      }
+      @case ('reminders') {
+        <app-reminders />
+      }
+      @case ('notifications') {
+        <app-notifications />
+      }
+      @case ('profile') {
+        <app-profile />
+      }
+    }
+  </main>
+</div>

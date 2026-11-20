@@ -1,0 +1,113 @@
+.authWrap {
+  min-height: 100vh;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.authHero {
+  flex: 1 1 420px;
+  position: relative;
+  background: linear-gradient(135deg, var(--brand-purple), var(--brand-purple-dark));
+  color: #fff;
+  padding: 56px 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 18px;
+  overflow: hidden;
+  min-height: 360px;
+}
+
+.heroBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 800;
+  font-size: 20px;
+  letter-spacing: 0.5px;
+}
+
+.authHero h1 {
+  font-size: 34px;
+  line-height: 1.2;
+  max-width: 440px;
+}
+
+.authHero p {
+  color: rgba(255, 255, 255, 0.85);
+  max-width: 420px;
+  line-height: 1.5;
+}
+
+.heroFeatures {
+  list-style: none;
+  margin: 10px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.heroFeatures li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 14px;
+}
+
+.heroFeatures .icon {
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 50%;
+  padding: 4px;
+  width: 22px;
+  height: 22px;
+}
+
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  filter: blur(2px);
+  animation: float 8s ease-in-out infinite;
+}
+
+.blob1 {
+  width: 220px;
+  height: 220px;
+  top: -60px;
+  right: -60px;
+}
+
+.blob2 {
+  width: 160px;
+  height: 160px;
+  bottom: -40px;
+  left: 10%;
+  animation-delay: 2s;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-16px) scale(1.05);
+  }
+}
+
+.authCard {
+  flex: 1 1 420px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+  background: var(--bg);
+}
+
+@media (max-width: 860px) {
+  .authHero {
+    padding: 40px 28px;
+  }
+}

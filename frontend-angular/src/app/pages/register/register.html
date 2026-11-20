@@ -1,0 +1,58 @@
+<app-auth-shell>
+  <div class="card">
+    <h2>Create your account</h2>
+    <p class="subtitle">Get set up with EzPay in under a minute.</p>
+
+    <form (ngSubmit)="submit()" #form="ngForm">
+      <div class="formGroup">
+        <label for="username">Full name</label>
+        <input id="username" name="username" type="text" [(ngModel)]="username" required minlength="2" />
+      </div>
+
+      <div class="formGroup">
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" [(ngModel)]="email" required />
+      </div>
+
+      <div class="formGroup">
+        <label for="mobileNumber">Mobile number</label>
+        <input id="mobileNumber" name="mobileNumber" type="tel" [(ngModel)]="mobileNumber" required pattern="^\+?[0-9]{10,15}$" />
+      </div>
+
+      <div class="formGroup">
+        <label for="password">Password</label>
+        <div class="inputWrap hasToggle">
+          <input
+            id="password"
+            name="password"
+            [type]="showPassword() ? 'text' : 'password'"
+            [(ngModel)]="password"
+            required
+            minlength="8"
+            pattern="^(?=.*[A-Z])(?=.*[0-9]).{8,128}$"
+          />
+          <button type="button" class="toggleVisibility" (click)="showPassword.set(!showPassword())" [attr.aria-label]="showPassword() ? 'Hide password' : 'Show password'">
+            <svg class="icon" viewBox="0 0 24 24">
+              @if (showPassword()) {
+                <path d="M3 3l18 18M10.6 10.6a2 2 0 0 0 2.8 2.8M9.9 5.1A10.5 10.5 0 0 1 12 5c6 0 9.5 5.5 9.5 7a10.6 10.6 0 0 1-2.2 3.1M6.3 6.9A11.4 11.4 0 0 0 2.5 12c0 1.5 3.5 7 9.5 7a9.9 9.9 0 0 0 3.4-.6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              } @else {
+                <path d="M2.5 12S6 5 12 5s9.5 7 9.5 7-3.5 7-9.5 7-9.5-7-9.5-7Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+                <circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.8"/>
+              }
+            </svg>
+          </button>
+        </div>
+        <small style="color: var(--text-muted); font-size: 12px;">At least 8 characters, one uppercase letter and one digit.</small>
+      </div>
+
+      <button type="submit" class="primaryBtn" [disabled]="loading() || form.invalid">
+        @if (loading()) {
+          <span class="spinner"></span>
+        }
+        Create account
+      </button>
+    </form>
+
+    <p class="formFooter">Already have an account? <a routerLink="/login">Log in</a></p>
+  </div>
+</app-auth-shell>

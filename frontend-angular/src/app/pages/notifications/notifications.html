@@ -1,0 +1,20 @@
+<div class="panel">
+  <h2>Notifications</h2>
+  @if (notifications().length === 0) {
+    <div class="emptyState">
+      <p>You're all caught up.</p>
+    </div>
+  } @else {
+    @for (n of notifications(); track n.notificationId) {
+      <div class="listItem" [class.unread]="!n.isRead" style="cursor: pointer;" (click)="!n.isRead && markRead(n.notificationId)">
+        <div>
+          <div class="title">{{ n.message }}</div>
+          <div class="meta">{{ n.category | titlecase }} · {{ n.createdAt | date: 'medium' }}</div>
+        </div>
+        @if (!n.isRead) {
+          <span class="pill" style="background: var(--warning-bg); color: var(--warning-text);">New</span>
+        }
+      </div>
+    }
+  }
+</div>
